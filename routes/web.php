@@ -49,10 +49,11 @@ Route::get('/pi', function () {
 });
 
 Route::prefix('clientes')->group(function () {
-    Route::get('/lista', [ClientesController::class, 'lista'])->name('clientes.lista')->middleware('auth');
+    Route::get('/listar', [ClientesController::class, 'listar'])->middleware('auth');
 });
 
-Route::group(['middleware' => ['auth']], function () {
+
+Route::group(['middleware' => ['auth']], function(){
     Route::resource('/users', App\Http\Controllers\UserController::class);
     Route::resource('/roles', App\Http\Controllers\RoleController::class);
 });

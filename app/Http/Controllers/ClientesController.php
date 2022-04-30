@@ -12,7 +12,7 @@ class ClientesController extends Controller
     //     $this->middleware('auth');
     // }
 
-    public function lista()
+    public function listar()
     {
         $clientes = Clientes::all();
 
