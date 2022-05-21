@@ -21,4 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(static function () {
     Route::get('/vendedores', [VendedoresController::class, 'index']);
+    Route::post('/vendedores', [VendedoresController::class, 'store']);
+    Route::delete('/vendedores/{id}', [VendedoresController::class, 'destroy']);
+    Route::get('/vendedores/{id}', [VendedoresController::class, 'show']);
+    Route::put('/vendedores/{id}', [VendedoresController::class, 'update']);
+
 });

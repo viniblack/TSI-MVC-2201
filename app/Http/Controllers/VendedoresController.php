@@ -35,7 +35,9 @@ class vendedoresController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $json = $request->getContent();
+        
+        return Vendedores::create(json_decode($json, JSON_OBJECT_AS_ARRAY));
     }
 
     /**
@@ -46,7 +48,15 @@ class vendedoresController extends Controller
      */
     public function show($id)
     {
-        //
+        $vendedor = Vendedores::find($id);
+
+        if($vendedor){
+            return $vendedor;
+        }else{
+            return json_encode([$id => 'nao existe']);
+        }
+
+        
     }
 
     /**
@@ -69,7 +79,18 @@ class vendedoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $vendedor = Vendedores::find($id);
+
+        if($vendedor){
+            $json = $request->getContent();
+            $atualizacao = json_decode($json, JSON_OBJECT_AS_ARRAY);
+            $vendedor->nome = $atualizacao['nome'];
+            $ret = $vendedor->update() ? [$id => 'atualizado'] : [$id => 'erro'];
+        }else{
+            $ret = [$id => 'nao existe'];
+        }
+
+        return json_encode($ret);
     }
 
     /**
@@ -80,6 +101,14 @@ class vendedoresController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $vendedor = Vendedores::find($id);
+
+        if($vendedor){
+            $ret = $vendedor->delete() ? [$id => 'apagado'] : [$id => 'erro'];
+        }else{
+            $ret = [$id => 'nao existe'];
+        }
+
+        return json_encode($ret);
     }
 }
